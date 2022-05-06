@@ -3,10 +3,12 @@ console.log('Stinky play time!')
 const canvas = document.querySelector('#canvas')
 /*CANVAS SETUP/ GAME STATE */
 const ctx = canvas.getContext('2d')
+canvas.width = 1200
+const canvW = canvas.width
+canvas.height = 600
+const canvH = canvas.height
+console.log(canvW, canvH)
 const randX = Math.floor(Math.random()*canvas.width)
-
-canvas.setAttribute("height", getComputedStyle(canvas)["height"])
-canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 const gameLoopInterval = setInterval(gameLoop, 60)
 
@@ -50,10 +52,12 @@ function movementHandler(e) {
     const speed = 10
     
     switch(e.key) {
-        case('a' || 'ArrowLeft'):
+        case('ArrowLeft'):
+        case('a'):
         cat.x = cat.x - speed
         break
-        case('d' || 'ArrowRight'):
+        case('ArrowRight'):
+        case('d'):
         cat.x = cat.x + speed
         break
     }
@@ -67,7 +71,7 @@ function gameLoop() {
     chicken.render()
     turkey.render()
     fish.render()
-    cheese.render()
+    // cheese.render()
 }
 
 
