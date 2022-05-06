@@ -3,10 +3,13 @@ console.log('Stinky play time!')
 const canvas = document.querySelector('#canvas')
 /*CANVAS SETUP/ GAME STATE */
 const ctx = canvas.getContext('2d')
-
+const randX = Math.floor(Math.random()*canvas.width)
 
 canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
+
+const gameLoopInterval = setInterval(gameLoop, 60)
+
 /*CLASSES */
 class Character {
     constructor(x, y, color, width, height, type){
@@ -27,13 +30,50 @@ class Character {
 /* GAME OBJECTS */
 //player cat
 const cat = new Character(576, 521, 'grey', 50, 75, 'player')
-cat.render()
-
+// cat.render()
+//falling chicken
+const chicken = new Character(randX, 0, 'rgb(121, 65, 71', 30, 30, 'food')
+// chicken.render()
+//falling turkey
+const turkey = new Character(randX, 0, 'rgb(197, 114, 86', 30, 30, 'food')
+// turkey.render()
+//falling fish
+const fish = new Character(randX, 0, 'rgb(168, 211, 254', 30, 30, 'food')
+// fish.render()
+//falling cheese
+const cheese = new Character(randX, 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
+// cheese.render()
 
 /*GAME FUNCTIONS */
+function movementHandler(e) {
+    // console.log(e.key)
+    const speed = 10
+    
+    switch(e.key) {
+        case('a' || 'ArrowLeft'):
+        cat.x = cat.x - speed
+        break
+        case('d' || 'ArrowRight'):
+        cat.x = cat.x + speed
+        break
+    }
+
+}
+function gameLoop() {
+    //clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //render the game objects
+    cat.render()
+    chicken.render()
+    turkey.render()
+    fish.render()
+    cheese.render()
+}
+
 
 /* EVENT LISTENERS */
 canvas.addEventListener('click', e => {
     console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
    
 })
+document.addEventListener('keydown', movementHandler)
