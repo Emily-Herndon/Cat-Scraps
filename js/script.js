@@ -3,9 +3,9 @@ console.log('Stinky play time!')
 const canvas = document.querySelector('#canvas')
 /*CANVAS SETUP/ GAME STATE */
 const ctx = canvas.getContext('2d')
-canvas.width = 1200
+canvas.width = 1000
 const canvW = canvas.width
-canvas.height = 600
+canvas.height = 400
 const canvH = canvas.height
 console.log(canvW, canvH)
 const randX = Math.floor(Math.random()*canvas.width)
@@ -31,7 +31,7 @@ class Character {
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(576, 521, 'grey', 50, 75, 'player')
+const cat = new Character(500, 320, 'grey', 50, 75, 'player')
 // cat.render()
 //falling chicken
 const chicken = new Character(randX, 0, 'rgb(121, 65, 71', 30, 30, 'food')
@@ -50,17 +50,49 @@ const cheese = new Character(randX, 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
 function movementHandler(e) {
     // console.log(e.key)
     const speed = 10
-    
-    switch(e.key) {
-        case('ArrowLeft'):
-        case('a'):
-        cat.x = cat.x - speed
-        break
-        case('ArrowRight'):
-        case('d'):
-        cat.x = cat.x + speed
-        break
+    if (cat.x < 0) {
+        switch(e.key) {
+            case('ArrowLeft'):
+            case('a'):
+                cat.x = cat.x + 0
+            break
+            case('ArrowRight'):
+            case('d'):
+            cat.x = cat.x + speed
+            break
+        }
+    }else {
+        switch(e.key) {
+            case('ArrowLeft'):
+            case('a'):
+                cat.x = cat.x - speed
+            break
+            case('ArrowRight'):
+            case('d'):
+                cat.x = cat.x + speed
+            break
+        }
     }
+    if (cat.width + cat.x > canvas.width){
+        switch(e.key) {
+            case('ArrowLeft'):
+            case('a'):
+            cat.x = cat.x - speed
+            break
+        }
+    }else {
+        switch(e.key) {
+            case('ArrowLeft'):
+            case('a'):
+            cat.x = cat.x - speed
+            break
+            case('ArrowRight'):
+            case('d'):
+            cat.x = cat.x + speed
+            break
+        }
+    }
+    
 
 }
 function gameLoop() {
@@ -71,7 +103,7 @@ function gameLoop() {
     chicken.render()
     turkey.render()
     fish.render()
-    // cheese.render()
+    cheese.render()
 }
 
 
