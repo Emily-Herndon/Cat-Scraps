@@ -54,7 +54,7 @@ function movementHandler(e) {
         switch(e.key) {
             case('ArrowLeft'):
             case('a'):
-                cat.x = cat.x + 0
+                cat.x = 0
             break
             case('ArrowRight'):
             case('d'):
@@ -78,6 +78,10 @@ function movementHandler(e) {
             case('ArrowLeft'):
             case('a'):
             cat.x = cat.x - speed
+            break
+            case('ArrowRight'):
+            case('d'):
+            cat.x = canvas.width - cat.width
             break
         }
     }else {
