@@ -16,6 +16,7 @@ function generateX (){
 // const randX = Math.floor(Math.random()*canvas.width)
 
 const gameLoopInterval = setInterval(gameLoop, 60)
+// const fallingObjectInterval = setInterval
 
 /*CLASSES */
 class Character {
@@ -53,74 +54,29 @@ const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese
 const fallingFood = [chicken, turkey, fish, cheese]
 
 /*GAME FUNCTIONS */
-// function movementHandler(e) {
-//     // console.log(e.key)
-//     const speed = 10
-//     if (cat.x < 0) {
-//         switch(e.key) {
-//             case('ArrowLeft'):
-//             case('a'):
-//                 cat.x = 0
-//             break
-//             case('ArrowRight'):
-//             case('d'):
-//                 cat.x = cat.x + speed
-//             break
-//         }
-//     }else {
-//         switch(e.key) {
-//             case('ArrowLeft'):
-//             case('a'):
-//                 cat.x = cat.x - speed
-//             break
-//             case('ArrowRight'):
-//             case('d'):
-//                 cat.x = cat.x + speed
-//             break
-//         }
-//     }
-//     if (cat.width + cat.x > canvas.width){
-//         switch(e.key) {
-//             case('ArrowLeft'):
-//             case('a'):
-//             cat.x = cat.x - speed
-//             break
-//             case('ArrowRight'):
-//             case('d'):
-//             cat.x = canvas.width - cat.width
-//             break
-//         }
-//     }else {
-//         switch(e.key) {
-//             case('ArrowLeft'):
-//             case('a'):
-//             cat.x = cat.x - speed
-//             break
-//             case('ArrowRight'):
-//             case('d'):
-//             cat.x = cat.x + speed
-//             break
-//         }
-//     }
-    
 
-// }
 function gameLoop() {
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //render the game objects
     cat.render()
-    draw()
+    draw(getRandomInt)
     
 }
-const fallRate = 5
-function falling () {
-    y += fallRate
-    return y
-}
-function draw() {
+// const fallRate = 5
+// function falling () {
+//     y += fallRate
+//     return y
+// }
+const getRandomInt = () => {
     //generate a random number 0-3 to select a food item to render
-    
+    const randoI = Math.floor(Math.random() * (4 - 0) + 0)
+    return randoI
+}
+
+const draw = (getRandomInt) => {
+    const randomI = getRandomInt()    
+    fallingFood[randomI].render()
 }
 
 /* EVENT LISTENERS */
