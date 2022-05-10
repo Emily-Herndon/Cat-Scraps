@@ -79,7 +79,7 @@ const spawnObject = () => {
 //         spawnedObject.y = 0 
 //     }
 // }
-setInterval(function(){
+const cheeseFall = setInterval(function(){
     badFood.push(new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese'))
 }, 3000)
 
@@ -88,21 +88,26 @@ function gameLoop() {
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //render the game objects
-    cat.render()
+    if (cat.alive){
+        cat.render()
+    }
     for(let i = 0; i < badFood.length; i++){
         badFood[i].render()
-        if (badFood[i].y < 400 && badFood[i].alive === true){
+        if(cat.x + cat.width >= badFood[i].x &&
+            //right
+            cat.x <= badFood[i].x + badFood[i].width &&
+            //top
+            cat.y + cat.height >= badFood[i].y &&
+            //bottom
+            cat.y <= badFood[i].y + badFood[i].height){
+                cat.alive = false
+                clearInterval(cheeseFall)
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+            }else if (badFood[i].y < 400){
             badFood[i].render()
             badFood[i].y += 5
-        }else if (badFood[i].y > 400 && badFood[i].alive === true){
-            badFood[i].render()
-            badFood[i].y = 0 
         }
     }
-   
-    // draw()
-    console.log(badFood)
-    
 }
 
 
