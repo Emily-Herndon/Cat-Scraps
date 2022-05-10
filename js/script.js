@@ -3,7 +3,7 @@ console.log('Stinky play time!')
 /*DOM SELECTORS */
 const canvas = document.querySelector('#canvas')
 const scoreCount = document.querySelector('#score')
-const status = document.querySelector('#status')
+const gameStatus = document.querySelector('#status')
 /*CANVAS SETUP/ GAME STATE */
 
 const ctx = canvas.getContext('2d')
@@ -72,10 +72,13 @@ const cheeseFall = setInterval(function(){
 const foodFall = setInterval(function(){
     // const randomI = getRandomInt()
     goodFood.push(new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food'))
+    console.log(goodFood)
 }, 2000)
+
 const arrayClear = setInterval(function(){
     badFood.pop()
 }, 6000)
+
 function gameLoop() {
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -96,7 +99,7 @@ function gameLoop() {
                 clearInterval(cheeseFall)
                 clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
-                status.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
+                gameStatus.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
             
             }else if (badFood[i].y < 400){
             badFood[i].render()
@@ -113,10 +116,12 @@ function gameLoop() {
             cat.y + cat.height >= goodFood[i].y &&
             //bottom
             cat.y <= goodFood[i].y + goodFood[i].height){
-                goodFood[i].alive === false
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                goodFood[i].alive = false
+                console.log(goodFood[i], "eeeeeeeeeee")
+                goodFood.splice(i, 1)
+                // ctx.clearRect(goodFood[i].x, goodFood[i].y, goodFood[i].x + goodFood[i].width, goodFood[i].y + goodFood[i].height)
                 cat.render()
-                score++
+                score += 1
                 scoreCount.innerText = `Score:${score}`
             }else if (goodFood[i].y < 400){
             goodFood[i].render()

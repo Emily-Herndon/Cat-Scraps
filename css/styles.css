@@ -14,13 +14,10 @@
     
     h1, h2 {
         font-family: 'Press Start 2P', monospace;
-        /* font-family: monospace; */
         color:darkorchid;
     }
     
     canvas {
-        /* background-image: url('../img/stone.png'); */
-        /* background-repeat: repeat; */
         background-image: url(../images/cartoon\ kitchen.jpg);
         background-size: 1000px 400px;
         width: 1000px;
@@ -72,4 +69,8 @@
     #btm-right {
         grid-area: btm-right;
         /* background-color: #222; */
+    }
+    #game-over{
+        background-color: white;
+
     }
