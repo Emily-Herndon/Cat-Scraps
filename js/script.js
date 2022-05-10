@@ -13,7 +13,7 @@ canvas.height = 400
 const canvH = canvas.height
 console.log(canvW, canvH)
 function generateX (){
-    const randX = Math.floor(Math.random()*970)
+    let randX = Math.floor(Math.random()*970)
     return randX
 }
 
@@ -42,35 +42,33 @@ class Character {
 //player cat
 const cat = new Character(500, 320, 'grey', 50, 75, 'player')
 // cat.render()
-//falling chicken
-const chicken = new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food')
-// chicken.render()
-// falling turkey
-const turkey = new Character(generateX(), 0, 'rgb(197, 114, 86', 30, 30, 'food')
-// turkey.render()
-//falling fish
-const fish = new Character(generateX(), 0, 'rgb(168, 211, 254', 30, 30, 'food')
-// fish.render()
-//falling cheese
-const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
-// cheese.render()
-const food = [chicken, turkey, fish]
+// //falling chicken
+// const chicken = new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food')
+// // chicken.render()
+// // falling turkey
+// const turkey = new Character(generateX(), 0, 'rgb(197, 114, 86', 30, 30, 'food')
+// // turkey.render()
+// //falling fish
+// const fish = new Character(generateX(), 0, 'rgb(168, 211, 254', 30, 30, 'food')
+// // fish.render()
+// //falling cheese
+// const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
+// // cheese.render()
 const goodFood = []
 const badFood = []
 
 /*GAME FUNCTIONS */
 
-const getRandomInt = () => {
-    //generate a random number 0-3 to select a food item to render
-    const randoI = Math.floor(Math.random() * (3 - 0) + 0)
-    return randoI
-}
+// const getRandomInt = () => {
+//     //generate a random number 0-3 to select a food item to render
+//     const randoI = Math.floor(Math.random() * (3 - 0) + 0)
+//     return randoI
+// }
 
 const cheeseFall = setInterval(function(){
     badFood.push(new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese'))
 }, 3000)
 const foodFall = setInterval(function(){
-    // const randomI = getRandomInt()
     goodFood.push(new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food'))
     console.log(goodFood)
 }, 2000)
