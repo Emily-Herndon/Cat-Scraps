@@ -21,7 +21,8 @@
     canvas {
         /* background-image: url('../img/stone.png'); */
         /* background-repeat: repeat; */
-        background-color: white;
+        background-image: url(../images/cartoon\ kitchen.jpg);
+        background-size: 1000px 400px;
         width: 1000px;
         height: 400px;
     }

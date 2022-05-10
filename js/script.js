@@ -2,7 +2,8 @@ console.log('Stinky play time!')
 
 /*DOM SELECTORS */
 const canvas = document.querySelector('#canvas')
-
+const scoreCount = document.querySelector('#score')
+const status = document.querySelector('#status')
 /*CANVAS SETUP/ GAME STATE */
 
 const ctx = canvas.getContext('2d')
@@ -17,7 +18,7 @@ function generateX (){
 }
 
 const gameLoopInterval = setInterval(gameLoop, 60)
-
+let score = 0
 
 
 /*CLASSES */
@@ -53,7 +54,8 @@ const fish = new Character(generateX(), 0, 'rgb(168, 211, 254', 30, 30, 'food')
 //falling cheese
 const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
 // cheese.render()
-
+const food = [chicken, turkey, fish]
+const goodFood = []
 const badFood = []
 
 /*GAME FUNCTIONS */
@@ -64,26 +66,16 @@ const getRandomInt = () => {
     return randoI
 }
 
-const spawnObject = () => {
-    const randomI = getRandomInt()    
-    return food[randomI]
-}
-
-// const draw = () => {
-//     const spawnedObject = spawnObject()
-//     if (spawnedObject.y < 400 && spawnedObject.alive === true){
-//         spawnedObject.render()
-//         spawnedObject.y += 5
-//     }else if (spawnedObject.y > 400 && spawnedObject.alive === true){
-//         spawnedObject.render()
-//         spawnedObject.y = 0 
-//     }
-// }
 const cheeseFall = setInterval(function(){
     badFood.push(new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese'))
 }, 3000)
-
-
+const foodFall = setInterval(function(){
+    // const randomI = getRandomInt()
+    goodFood.push(new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food'))
+}, 2000)
+const arrayClear = setInterval(function(){
+    badFood.pop()
+}, 6000)
 function gameLoop() {
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -102,10 +94,33 @@ function gameLoop() {
             cat.y <= badFood[i].y + badFood[i].height){
                 cat.alive = false
                 clearInterval(cheeseFall)
+                clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
+                status.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
+            
             }else if (badFood[i].y < 400){
             badFood[i].render()
             badFood[i].y += 5
+        }
+    }
+    for(let i = 0; i < goodFood.length; i++){
+        if (goodFood[i].alive){
+            goodFood[i].render()}
+        if(cat.x + cat.width >= goodFood[i].x &&
+            //right
+            cat.x <= goodFood[i].x + goodFood[i].width &&
+            //top
+            cat.y + cat.height >= goodFood[i].y &&
+            //bottom
+            cat.y <= goodFood[i].y + goodFood[i].height){
+                goodFood[i].alive === false
+                ctx.clearRect(0, 0, canvas.width, canvas.height)
+                cat.render()
+                score++
+                scoreCount.innerText = `Score:${score}`
+            }else if (goodFood[i].y < 400){
+            goodFood[i].render()
+            goodFood[i].y += 5
         }
     }
 }
