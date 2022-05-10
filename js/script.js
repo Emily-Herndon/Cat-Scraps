@@ -1,6 +1,8 @@
 console.log('Stinky play time!')
+
 /*DOM SELECTORS */
 const canvas = document.querySelector('#canvas')
+
 /*CANVAS SETUP/ GAME STATE */
 
 const ctx = canvas.getContext('2d')
@@ -13,10 +15,10 @@ function generateX (){
     const randX = Math.floor(Math.random()*970)
     return randX
 }
-// const randX = Math.floor(Math.random()*canvas.width)
 
 const gameLoopInterval = setInterval(gameLoop, 60)
-// const fallingObjectInterval = setInterval
+
+
 
 /*CLASSES */
 class Character {
@@ -42,7 +44,7 @@ const cat = new Character(500, 320, 'grey', 50, 75, 'player')
 //falling chicken
 const chicken = new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food')
 // chicken.render()
-//falling turkey
+// falling turkey
 const turkey = new Character(generateX(), 0, 'rgb(197, 114, 86', 30, 30, 'food')
 // turkey.render()
 //falling fish
@@ -51,33 +53,58 @@ const fish = new Character(generateX(), 0, 'rgb(168, 211, 254', 30, 30, 'food')
 //falling cheese
 const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
 // cheese.render()
-const fallingFood = [chicken, turkey, fish, cheese]
+
+const badFood = []
 
 /*GAME FUNCTIONS */
+
+const getRandomInt = () => {
+    //generate a random number 0-3 to select a food item to render
+    const randoI = Math.floor(Math.random() * (3 - 0) + 0)
+    return randoI
+}
+
+const spawnObject = () => {
+    const randomI = getRandomInt()    
+    return food[randomI]
+}
+
+// const draw = () => {
+//     const spawnedObject = spawnObject()
+//     if (spawnedObject.y < 400 && spawnedObject.alive === true){
+//         spawnedObject.render()
+//         spawnedObject.y += 5
+//     }else if (spawnedObject.y > 400 && spawnedObject.alive === true){
+//         spawnedObject.render()
+//         spawnedObject.y = 0 
+//     }
+// }
+setInterval(function(){
+    badFood.push(new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese'))
+}, 3000)
+
 
 function gameLoop() {
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //render the game objects
     cat.render()
-    draw(getRandomInt)
+    for(let i = 0; i < badFood.length; i++){
+        badFood[i].render()
+        if (badFood[i].y < 400 && badFood[i].alive === true){
+            badFood[i].render()
+            badFood[i].y += 5
+        }else if (badFood[i].y > 400 && badFood[i].alive === true){
+            badFood[i].render()
+            badFood[i].y = 0 
+        }
+    }
+   
+    // draw()
+    console.log(badFood)
     
 }
-// const fallRate = 5
-// function falling () {
-//     y += fallRate
-//     return y
-// }
-const getRandomInt = () => {
-    //generate a random number 0-3 to select a food item to render
-    const randoI = Math.floor(Math.random() * (4 - 0) + 0)
-    return randoI
-}
 
-const draw = (getRandomInt) => {
-    const randomI = getRandomInt()    
-    fallingFood[randomI].render()
-}
 
 /* EVENT LISTENERS */
 canvas.addEventListener('click', e => {
