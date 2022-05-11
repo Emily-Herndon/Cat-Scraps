@@ -16,44 +16,38 @@ function generateX (){
     let randX = Math.floor(Math.random()*970)
     return randX
 }
-
-// const gameLoopInterval = setInterval(gameLoop, 60)
 let score = 0
+// const gameLoopInterval = setInterval(gameLoop, 60)
 
+/* SPRITES */
+const catSprite = new Image()
+catSprite.src = './images/catSprite.png'
+const fishSprite = new Image()
+fishSprite.src = './images/fishSprite.png'
+const cheeseSprite = new Image()
+cheeseSprite.src = './images/cheeseSprite.png'
 
 /*CLASSES */
 class Character {
-    constructor(x, y, color, width, height, type){
+    constructor(x, y, width, height, type, image){
         this.x = x
         this.y = y
-        this.color = color
         this.width = width
         this.height = height
         this.alive = true
         this.type = type
+        this.image = image
     }
     render(){
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
     }
 }
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(500, 320, 'grey', 50, 75, 'player')
+const cat = new Character(500, 340, 71, 55, 'player', catSprite)
 // cat.render()
-// //falling chicken
-// const chicken = new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food')
-// // chicken.render()
-// // falling turkey
-// const turkey = new Character(generateX(), 0, 'rgb(197, 114, 86', 30, 30, 'food')
-// // turkey.render()
-// //falling fish
-// const fish = new Character(generateX(), 0, 'rgb(168, 211, 254', 30, 30, 'food')
-// // fish.render()
-// //falling cheese
-// const cheese = new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese')
-// // cheese.render()
+
 const goodFood = []
 const badFood = []
 
@@ -65,20 +59,23 @@ const badFood = []
 //     return randoI
 // }
 
+//adds cheese to badFood array to drop cheese @ set rate
 const cheeseFall = setInterval(function(){
-    badFood.push(new Character(generateX(), 0, 'rgb(250, 192, 48', 30, 30, 'cheese'))
+    badFood.push(new Character(generateX(), 0, 30, 30, 'cheese', cheeseSprite))
 }, 3000)
+//adds good food to goodFood array to drop good food @ set rate
 const foodFall = setInterval(function(){
-    goodFood.push(new Character(generateX(), 0, 'rgb(121, 65, 71', 30, 30, 'food'))
-    console.log(goodFood)
+    goodFood.push(new Character(generateX(), 0, 40, 55, 'food', fishSprite))
+    // console.log(goodFood)
 }, 2000)
-
-const arrayClear = setInterval(function(){
-    badFood.pop()
-    goodFood.pop()
+//removes items from the beginning of the arrays @ set intervals to limit their length
+const cheeseClear = setInterval(function(){
+    badFood.splice(0, 1)
+    goodFood.splice(0, 1)
 }, 6000)
 
 function gameLoop() {
+    //smoother movement from falling food
     window.requestAnimationFrame(gameLoop)
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -86,8 +83,10 @@ function gameLoop() {
     if (cat.alive){
         cat.render()
     }
+    //dropping cheese
     for(let i = 0; i < badFood.length; i++){
         badFood[i].render()
+        //hit detection btwn cat & cheese
         if(cat.x + cat.width >= badFood[i].x &&
             //right
             cat.x <= badFood[i].x + badFood[i].width &&
@@ -100,15 +99,16 @@ function gameLoop() {
                 clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
                 gameStatus.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
-            
             }else if (badFood[i].y < 400){
             badFood[i].render()
             badFood[i].y += 2
         }
     }
+    //dropping good food
     for(let i = 0; i < goodFood.length; i++){
         if (goodFood[i].alive){
             goodFood[i].render()}
+        //hit detection btwn cat & good food    
         if(cat.x + cat.width >= goodFood[i].x &&
             //right
             cat.x <= goodFood[i].x + goodFood[i].width &&
@@ -134,6 +134,7 @@ function gameLoop() {
 canvas.addEventListener('click', e => {
     console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
 })
+//player movement
 document.addEventListener('keydown', function(e) {
     const speed = 10
     if (cat.x < 0) {
