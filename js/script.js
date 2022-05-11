@@ -22,10 +22,19 @@ let score = 0
 /* SPRITES */
 const catSprite = new Image()
 catSprite.src = './images/catSprite.png'
-const fishSprite = new Image()
-fishSprite.src = './images/fishSprite.png'
+
 const cheeseSprite = new Image()
 cheeseSprite.src = './images/cheeseSprite.png'
+
+const fishSprite = new Image()
+fishSprite.src = './images/fishSprite.png'
+
+const chickenSprite = new Image()
+chickenSprite.src = './images/chickenSprite.png'
+
+const turkeySprite = new Image()
+turkeySprite.src = './images/turkeySprite.png'
+
 
 /*CLASSES */
 class Character {
@@ -47,32 +56,42 @@ class Character {
 //player cat
 const cat = new Character(500, 340, 71, 55, 'player', catSprite)
 // cat.render()
-
+const goodSprites = [chickenSprite, fishSprite, turkeySprite]
 const goodFood = []
 const badFood = []
 
 /*GAME FUNCTIONS */
 
-// const getRandomInt = () => {
-//     //generate a random number 0-3 to select a food item to render
-//     const randoI = Math.floor(Math.random() * (3 - 0) + 0)
-//     return randoI
-// }
+const getRandomInt = () => {
+    //generate a random number 0-3 to select a food item to render
+    const randI = Math.floor(Math.random() * (3 - 0) + 0)
+    return randI
+}
 
 //adds cheese to badFood array to drop cheese @ set rate
 const cheeseFall = setInterval(function(){
-    badFood.push(new Character(generateX(), 0, 30, 30, 'cheese', cheeseSprite))
+    badFood.push(new Character(generateX(), 0, 45, 45, 'cheese', cheeseSprite))
 }, 3000)
+
+let w = 45
+let h = 45
 //adds good food to goodFood array to drop good food @ set rate
 const foodFall = setInterval(function(){
-    goodFood.push(new Character(generateX(), 0, 40, 55, 'food', fishSprite))
+    const randoI = getRandomInt()
+    //sets image size based on sprite
+    if (goodSprites[randoI]===chickenSprite){
+        w = 50
+        h = 47
+    }else if (goodSprites[randoI]===fishSprite){
+        w = 40
+        h = 55
+    }else if (goodSprites[randoI === turkeySprite]){
+        w = 70
+        h = 50
+    }
+    goodFood.push(new Character(generateX(), 0, w, h, 'food', goodSprites[randoI]))
     // console.log(goodFood)
 }, 2000)
-//removes items from the beginning of the arrays @ set intervals to limit their length
-const cheeseClear = setInterval(function(){
-    badFood.splice(0, 1)
-    goodFood.splice(0, 1)
-}, 6000)
 
 function gameLoop() {
     //smoother movement from falling food
@@ -99,9 +118,12 @@ function gameLoop() {
                 clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
                 gameStatus.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
-            }else if (badFood[i].y < 400){
+        }else if (badFood[i].y < 400){
             badFood[i].render()
             badFood[i].y += 2
+        }else if (badFood[i].y >= 400){
+            badFood.splice(i, 1)
+            //prevents food from falling forever & arrays from expanding exponentially
         }
     }
     //dropping good food
@@ -122,9 +144,12 @@ function gameLoop() {
                 // cat.render()
                 score++
                 scoreCount.innerText = `Score:${score}`
-            }else if (goodFood[i].y < 400){
+        }else if (goodFood[i].y < 400){
             goodFood[i].render()
             goodFood[i].y += 2
+        }else if (goodFood[i].y >= 400){
+            goodFood.splice(i, 1)
+            //prevents food from falling forever & arrays from expanding exponentially
         }
     }
 }
