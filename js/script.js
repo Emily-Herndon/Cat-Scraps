@@ -54,7 +54,7 @@ class Character {
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(500, 340, 71, 55, 'player', catSprite)
+const cat = new Character(500, 340, 76, 60, 'player', catSprite)
 // cat.render()
 const goodSprites = [chickenSprite, fishSprite, turkeySprite]
 const goodFood = []
