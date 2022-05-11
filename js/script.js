@@ -17,7 +17,7 @@ function generateX (){
     return randX
 }
 
-const gameLoopInterval = setInterval(gameLoop, 60)
+// const gameLoopInterval = setInterval(gameLoop, 60)
 let score = 0
 
 
@@ -75,9 +75,11 @@ const foodFall = setInterval(function(){
 
 const arrayClear = setInterval(function(){
     badFood.pop()
+    goodFood.pop()
 }, 6000)
 
 function gameLoop() {
+    window.requestAnimationFrame(gameLoop)
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //render the game objects
@@ -101,7 +103,7 @@ function gameLoop() {
             
             }else if (badFood[i].y < 400){
             badFood[i].render()
-            badFood[i].y += 5
+            badFood[i].y += 2
         }
     }
     for(let i = 0; i < goodFood.length; i++){
@@ -115,15 +117,14 @@ function gameLoop() {
             //bottom
             cat.y <= goodFood[i].y + goodFood[i].height){
                 goodFood[i].alive = false
-                console.log(goodFood[i], "eeeeeeeeeee")
+                // console.log(goodFood[i], "eeeeeeeeeee")
                 goodFood.splice(i, 1)
-                // ctx.clearRect(goodFood[i].x, goodFood[i].y, goodFood[i].x + goodFood[i].width, goodFood[i].y + goodFood[i].height)
-                cat.render()
-                score += 1
+                // cat.render()
+                score++
                 scoreCount.innerText = `Score:${score}`
             }else if (goodFood[i].y < 400){
             goodFood[i].render()
-            goodFood[i].y += 5
+            goodFood[i].y += 2
         }
     }
 }
@@ -182,3 +183,4 @@ document.addEventListener('keydown', function(e) {
         }
     }
 })
+gameLoop()
