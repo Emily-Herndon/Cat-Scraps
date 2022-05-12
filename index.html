@@ -13,19 +13,23 @@
     <div id="container">
         <!-- <aside id="top-left"><h2>Cat Scraps</h2></aside>
         <aside id="top-right"><h2>Don't be a stinky💩 kitty!</h2></aside> -->
-        
         <main>
             <canvas id="canvas"></canvas>
         </main>
         <aside id="btm-left"><h2 id="score"></h2></aside>
         <aside id="btm-right"><h2 id="status">Catch the food but avoid the cheese! Move left & right with "A" & "D"</h2></aside>
-        <div id="gameOverScreen" class="hidden">
-            <div id="gameOverMessage"></div>
-            <button id="restartButton">Try Again!</button>
-            <!-- <img src="./images/game-over-bg.jpg"/> -->
-        </div>
     </div>
-      
+    <div id="startScreen" class="start">
+        <div>Cat Scraps🐈</div>
+        <p>Don't be a stinky💩 kitty!</p>
+        <p>Move Stinky left and right to catch the food but be sure to avoid the cheese!</p>
+        <button id="startButton">Start</button>
+    </div>
+    <div id="gameOverScreen" class="hidden">
+        <div id="gameOverMessage"></div>
+        <button id="restartButton">Try Again!</button>
+        <!-- <img src="./images/game-over-bg.jpg"/> -->
+    </div>
     <script src="./js/script.js"></script>
 </body>
 </html>

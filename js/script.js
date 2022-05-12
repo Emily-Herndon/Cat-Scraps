@@ -7,7 +7,8 @@ const gameStatus = document.querySelector('#status')
 const gameOverMessage = document.querySelector('#gameOverMessage')
 const gameOverScreen = document.querySelector('#gameOverScreen')
 const restartButton = document.querySelector('#restartButton')
-
+const startButton = document.querySelector('#startButton')
+const startScreen = document.querySelector('#startScreen')
 /*CANVAS SETUP/ GAME STATE */
 let gameOver = false
 const ctx = canvas.getContext('2d')
@@ -162,41 +163,16 @@ function gameLoop() {
     //smoother movement from falling food
 
 }
-restartButton.addEventListener('click', function(){
-    cat = new Character(500, 505, 76, 60, 'player', catSprite)
-    goodFood = []
-    badFood = []
-    gameOver = false
-    gameOverScreen.classList.remove('show')
-    cheeseFall = setInterval(function(){
-        badFood.push(new Character(generateX(), 0, 45, 45, 'cheese', cheeseSprite))
-    }, 3000)
-    foodFall = setInterval(function(){
-        let randoI = getRandomInt()
-        //sets image size based on sprite
-        if (goodSprites[randoI]===chickenSprite){
-            w = 50
-            h = 47
-        }else if (goodSprites[randoI]===fishSprite){
-            w = 40
-            h = 55
-        }else if (goodSprites[randoI === turkeySprite]){
-            w = 70
-            h = 50
-        }
-        goodFood.push(new Character(generateX(), 0, w, h, 'food', goodSprites[randoI]))
-        // console.log(goodFood)
-    }, 2000)
-    score = 0
-    scoreCount.innerText = ""
-    gameLoop()
-    console.log(gameOver)
-})
+
 /* EVENT LISTENERS */
-canvas.addEventListener('click', e => {
-    console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
+// canvas.addEventListener('click', e => {
+//     console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
+// })
+//Start Button
+startButton.addEventListener('click', function(){
+    gameLoop()
+    startScreen.classList.add('hide')
 })
-//restart button
 
 //player movement
 document.addEventListener('keydown', function(e) {
@@ -250,4 +226,34 @@ document.addEventListener('keydown', function(e) {
         }
     }
 })
-gameLoop()
+//restart button
+restartButton.addEventListener('click', function(){
+    cat = new Character(500, 505, 76, 60, 'player', catSprite)
+    goodFood = []
+    badFood = []
+    gameOver = false
+    gameOverScreen.classList.remove('show')
+    cheeseFall = setInterval(function(){
+        badFood.push(new Character(generateX(), 0, 45, 45, 'cheese', cheeseSprite))
+    }, 3000)
+    foodFall = setInterval(function(){
+        let randoI = getRandomInt()
+        //sets image size based on sprite
+        if (goodSprites[randoI]===chickenSprite){
+            w = 50
+            h = 47
+        }else if (goodSprites[randoI]===fishSprite){
+            w = 40
+            h = 55
+        }else if (goodSprites[randoI === turkeySprite]){
+            w = 70
+            h = 50
+        }
+        goodFood.push(new Character(generateX(), 0, w, h, 'food', goodSprites[randoI]))
+        // console.log(goodFood)
+    }, 2000)
+    score = 0
+    scoreCount.innerText = ""
+    gameLoop()
+    console.log(gameOver)
+})
