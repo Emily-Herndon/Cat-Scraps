@@ -6,9 +6,10 @@ const scoreCount = document.querySelector('#score')
 const gameStatus = document.querySelector('#status')
 const gameOverMessage = document.querySelector('#gameOverMessage')
 const gameOverScreen = document.querySelector('#gameOverScreen')
-const restartButton = document.createElement('button')
-/*CANVAS SETUP/ GAME STATE */
+const restartButton = document.querySelector('#restartButton')
 
+/*CANVAS SETUP/ GAME STATE */
+let gameOver = false
 const ctx = canvas.getContext('2d')
 canvas.width = 1000
 const canvW = canvas.width
@@ -20,6 +21,8 @@ function generateX (){
     return randX
 }
 let score = 0
+
+const eatFood = new Audio()
 // const gameLoopInterval = setInterval(gameLoop, 60)
 
 /* SPRITES */
@@ -57,30 +60,30 @@ class Character {
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(500, 505, 76, 60, 'player', catSprite)
+let cat = new Character(500, 505, 76, 60, 'player', catSprite)
 // cat.render()
 const goodSprites = [chickenSprite, fishSprite, turkeySprite]
-const goodFood = []
-const badFood = []
+let goodFood = []
+let badFood = []
 
 /*GAME FUNCTIONS */
 
-const getRandomInt = () => {
+let getRandomInt = () => {
     //generate a random number 0-3 to select a food image to render
     const randI = Math.floor(Math.random() * (3 - 0) + 0)
     return randI
 }
 
 //adds cheese to badFood array to drop cheese @ set rate
-const cheeseFall = setInterval(function(){
+let cheeseFall = setInterval(function(){
     badFood.push(new Character(generateX(), 0, 45, 45, 'cheese', cheeseSprite))
 }, 3000)
 
 let w = 45
 let h = 45
 //adds good food to goodFood array to drop good food @ set rate
-const foodFall = setInterval(function(){
-    const randoI = getRandomInt()
+let foodFall = setInterval(function(){
+    let randoI = getRandomInt()
     //sets image size based on sprite
     if (goodSprites[randoI]===chickenSprite){
         w = 50
@@ -97,28 +100,29 @@ const foodFall = setInterval(function(){
 }, 2000)
 
 function gameLoop() {
+    if(gameOver){
+        return
+    }
+    window.requestAnimationFrame(gameLoop)
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //dropping cheese
     for(let i = 0; i < badFood.length; i++){
-       console.log('where da cheese?')
+    //    console.log('where da cheese?')
         badFood[i].render()
         //hit detection btwn cat & cheese
-        if(cat.x + cat.width >= badFood[i].x &&
-            //right
-            cat.x + 40 <= badFood[i].x + badFood[i].width &&
-            //top
-            cat.y + cat.height >= badFood[i].y &&
-            //bottom
-            cat.y <= badFood[i].y + badFood[i].height){
+        if(cat.x + cat.width >= badFood[i].x && //right
+            cat.x + 40 <= badFood[i].x + badFood[i].width && //left
+            cat.y + cat.height >= badFood[i].y && //bottom 
+            cat.y <= badFood[i].y + badFood[i].height){ //top
                 cat.alive = false
                 clearInterval(cheeseFall)
                 clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
                 gameOverMessage.innerText = `Game Over! \n Stinky's running to the litter box! \n Your score was ${score}`
-                console.log('hello')
                 gameOverScreen.classList.add('show')
-                return
+                gameOver = true
+                console.log(gameOver)
             }else if (badFood[i].y < 570){
                 badFood[i].render()
                 badFood[i].y += 2
@@ -132,13 +136,10 @@ function gameLoop() {
             if (goodFood[i].alive){
                 goodFood[i].render()}
                 //hit detection btwn cat & good food    
-                if(cat.x + cat.width >= goodFood[i].x &&
-                    //right
-                    cat.x + 40 <= goodFood[i].x + goodFood[i].width &&
-                    //top
-                    cat.y + cat.height >= goodFood[i].y &&
-                    //bottom
-                    cat.y <= goodFood[i].y + goodFood[i].height){
+                if(cat.x + cat.width >= goodFood[i].x && //right
+                    cat.x + 40 <= goodFood[i].x + goodFood[i].width && //left
+                    cat.y + cat.height >= goodFood[i].y && //bottom
+                    cat.y <= goodFood[i].y + goodFood[i].height){ //top
                         goodFood[i].alive = false
                         // console.log(goodFood[i], "eeeeeeeeeee")
                         goodFood.splice(i, 1)
@@ -157,19 +158,49 @@ function gameLoop() {
     //render the game objects
     if (cat.alive){
         cat.render()
-        console.log('cat')
     }
     //smoother movement from falling food
-    window.requestAnimationFrame(gameLoop)
-}
 
+}
+restartButton.addEventListener('click', function(){
+    cat = new Character(500, 505, 76, 60, 'player', catSprite)
+    goodFood = []
+    badFood = []
+    gameOver = false
+    gameOverScreen.classList.remove('show')
+    cheeseFall = setInterval(function(){
+        badFood.push(new Character(generateX(), 0, 45, 45, 'cheese', cheeseSprite))
+    }, 3000)
+    foodFall = setInterval(function(){
+        let randoI = getRandomInt()
+        //sets image size based on sprite
+        if (goodSprites[randoI]===chickenSprite){
+            w = 50
+            h = 47
+        }else if (goodSprites[randoI]===fishSprite){
+            w = 40
+            h = 55
+        }else if (goodSprites[randoI === turkeySprite]){
+            w = 70
+            h = 50
+        }
+        goodFood.push(new Character(generateX(), 0, w, h, 'food', goodSprites[randoI]))
+        // console.log(goodFood)
+    }, 2000)
+    score = 0
+    scoreCount.innerText = ""
+    gameLoop()
+    console.log(gameOver)
+})
 /* EVENT LISTENERS */
 canvas.addEventListener('click', e => {
     console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
 })
+//restart button
+
 //player movement
 document.addEventListener('keydown', function(e) {
-    const speed = 10
+    const speed = 15
     if (cat.x < 0) {
         switch(e.key) {
             case('ArrowLeft'):
