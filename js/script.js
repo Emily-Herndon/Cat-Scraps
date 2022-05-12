@@ -9,7 +9,7 @@ const gameStatus = document.querySelector('#status')
 const ctx = canvas.getContext('2d')
 canvas.width = 1000
 const canvW = canvas.width
-canvas.height = 400
+canvas.height = 450
 const canvH = canvas.height
 console.log(canvW, canvH)
 function generateX (){
@@ -54,7 +54,7 @@ class Character {
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(500, 340, 76, 60, 'player', catSprite)
+const cat = new Character(500, 390, 76, 60, 'player', catSprite)
 // cat.render()
 const goodSprites = [chickenSprite, fishSprite, turkeySprite]
 const goodFood = []

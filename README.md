@@ -26,10 +26,16 @@ You play as Stinky, a cat living in a house with some __*very*__ messy people. Y
 - Add sound effects
 
 ---
+## Play the Game!
+[Here](https://emily-herndon.github.io/Cat-Scraps/)
+
+
+---
 ### Tech Stacks
 - HTML/CSS (Canvas to hold the game)
 - JavaScript
-
-<!-- ---
-### Potential Roadblocks
--  -->
+---
+# Image Sources
+- Sprites courtesy of Vectornator's Iconator library
+- [Kitchen Background]("https://www.freepik.com/vectors/kitchen-cartoon") created by vectorpocket 
+- [Cat Paw background]("https://www.freepik.com/vectors/cat") created by pch.vector 
