@@ -6,17 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Scraps🐈</title>
     <link rel="stylesheet" href="./css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="container">
-        <aside id="top-left"><h2>Cat Scraps</h2></aside>
-        <aside id="top-right"><h2>Don't be a stinky💩 kitty!</h2></aside>
+        <!-- <aside id="top-left"><h2>Cat Scraps</h2></aside>
+        <aside id="top-right"><h2>Don't be a stinky💩 kitty!</h2></aside> -->
+        
         <main>
             <canvas id="canvas"></canvas>
         </main>
         <aside id="btm-left"><h2 id="score"></h2></aside>
         <aside id="btm-right"><h2 id="status">Catch the food but avoid the cheese! Move left & right with "A" & "D"</h2></aside>
-      </div>
+        <div id="gameOverScreen" class="hidden">
+            <div id="gameOverMessage"></div>
+            <button id="restartButton">Try Again!</button>
+            <!-- <img src="./images/game-over-bg.jpg"/> -->
+        </div>
+    </div>
+      
     <script src="./js/script.js"></script>
 </body>
 </html>

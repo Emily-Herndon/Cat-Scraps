@@ -4,12 +4,15 @@ console.log('Stinky play time!')
 const canvas = document.querySelector('#canvas')
 const scoreCount = document.querySelector('#score')
 const gameStatus = document.querySelector('#status')
+const gameOverMessage = document.querySelector('#gameOverMessage')
+const gameOverScreen = document.querySelector('#gameOverScreen')
+const restartButton = document.createElement('button')
 /*CANVAS SETUP/ GAME STATE */
 
 const ctx = canvas.getContext('2d')
 canvas.width = 1000
 const canvW = canvas.width
-canvas.height = 450
+canvas.height = 570
 const canvH = canvas.height
 console.log(canvW, canvH)
 function generateX (){
@@ -54,7 +57,7 @@ class Character {
 
 /* GAME OBJECTS */
 //player cat
-const cat = new Character(500, 390, 76, 60, 'player', catSprite)
+const cat = new Character(500, 505, 76, 60, 'player', catSprite)
 // cat.render()
 const goodSprites = [chickenSprite, fishSprite, turkeySprite]
 const goodFood = []
@@ -63,7 +66,7 @@ const badFood = []
 /*GAME FUNCTIONS */
 
 const getRandomInt = () => {
-    //generate a random number 0-3 to select a food item to render
+    //generate a random number 0-3 to select a food image to render
     const randI = Math.floor(Math.random() * (3 - 0) + 0)
     return randI
 }
@@ -94,21 +97,16 @@ const foodFall = setInterval(function(){
 }, 2000)
 
 function gameLoop() {
-    //smoother movement from falling food
-    window.requestAnimationFrame(gameLoop)
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //render the game objects
-    if (cat.alive){
-        cat.render()
-    }
     //dropping cheese
     for(let i = 0; i < badFood.length; i++){
+       console.log('where da cheese?')
         badFood[i].render()
         //hit detection btwn cat & cheese
         if(cat.x + cat.width >= badFood[i].x &&
             //right
-            cat.x <= badFood[i].x + badFood[i].width &&
+            cat.x + 40 <= badFood[i].x + badFood[i].width &&
             //top
             cat.y + cat.height >= badFood[i].y &&
             //bottom
@@ -117,43 +115,53 @@ function gameLoop() {
                 clearInterval(cheeseFall)
                 clearInterval(foodFall)
                 ctx.clearRect(0, 0, canvas.width, canvas.height)
-                gameStatus.innerText = `Game Over! Stinky's running to the litter box! Your score was ${score}`
-        }else if (badFood[i].y < 400){
-            badFood[i].render()
-            badFood[i].y += 2
-        }else if (badFood[i].y >= 400){
-            badFood.splice(i, 1)
-            //prevents food from falling forever & arrays from expanding exponentially
+                gameOverMessage.innerText = `Game Over! \n Stinky's running to the litter box! \n Your score was ${score}`
+                console.log('hello')
+                gameOverScreen.classList.add('show')
+                return
+            }else if (badFood[i].y < 570){
+                badFood[i].render()
+                badFood[i].y += 2
+            }else if (badFood[i].y >= 570){
+                badFood.splice(i, 1)
+                //prevents food from falling forever & arrays from expanding exponentially
+            }
         }
+        //dropping good food
+        for(let i = 0; i < goodFood.length; i++){
+            if (goodFood[i].alive){
+                goodFood[i].render()}
+                //hit detection btwn cat & good food    
+                if(cat.x + cat.width >= goodFood[i].x &&
+                    //right
+                    cat.x + 40 <= goodFood[i].x + goodFood[i].width &&
+                    //top
+                    cat.y + cat.height >= goodFood[i].y &&
+                    //bottom
+                    cat.y <= goodFood[i].y + goodFood[i].height){
+                        goodFood[i].alive = false
+                        // console.log(goodFood[i], "eeeeeeeeeee")
+                        goodFood.splice(i, 1)
+                        // cat.render()
+                        score++
+                        scoreCount.innerText = `Score:${score}`
+                    }else if (goodFood[i].y < 570){
+                        goodFood[i].render()
+                        goodFood[i].y += 2
+                    }else if (goodFood[i].y >= 570){
+                        goodFood.splice(i, 1)
+                        //prevents food from falling forever & arrays from expanding exponentially
+                    }
+                }
+    
+    //render the game objects
+    if (cat.alive){
+        cat.render()
+        console.log('cat')
     }
-    //dropping good food
-    for(let i = 0; i < goodFood.length; i++){
-        if (goodFood[i].alive){
-            goodFood[i].render()}
-        //hit detection btwn cat & good food    
-        if(cat.x + cat.width >= goodFood[i].x &&
-            //right
-            cat.x <= goodFood[i].x + goodFood[i].width &&
-            //top
-            cat.y + cat.height >= goodFood[i].y &&
-            //bottom
-            cat.y <= goodFood[i].y + goodFood[i].height){
-                goodFood[i].alive = false
-                // console.log(goodFood[i], "eeeeeeeeeee")
-                goodFood.splice(i, 1)
-                // cat.render()
-                score++
-                scoreCount.innerText = `Score:${score}`
-        }else if (goodFood[i].y < 400){
-            goodFood[i].render()
-            goodFood[i].y += 2
-        }else if (goodFood[i].y >= 400){
-            goodFood.splice(i, 1)
-            //prevents food from falling forever & arrays from expanding exponentially
-        }
-    }
+    //smoother movement from falling food
+    window.requestAnimationFrame(gameLoop)
 }
-
 
 /* EVENT LISTENERS */
 canvas.addEventListener('click', e => {
@@ -167,6 +175,7 @@ document.addEventListener('keydown', function(e) {
             case('ArrowLeft'):
             case('a'):
                 cat.x = 0
+                //prevents cat from moving off left side of screen
             break
             case('ArrowRight'):
             case('d'):
@@ -195,6 +204,7 @@ document.addEventListener('keydown', function(e) {
             case('d'):
             cat.x = canvas.width - cat.width
             break
+            //prevents cat from moving off right side of screen
         }
     }else {
         switch(e.key) {
