@@ -24,6 +24,9 @@ function generateX (){
 let score = 0
 
 const eatFood = new Audio()
+const meow = new Audio('./audio/meow.mp3')
+meow.volume = .5
+const gameOverSound = new Audio('./audio/fart-sound.wav')
 // const gameLoopInterval = setInterval(gameLoop, 60)
 
 /* SPRITES */
@@ -104,12 +107,12 @@ function gameLoop() {
     if(gameOver){
         return
     }
+    //smoother movement from falling food
     window.requestAnimationFrame(gameLoop)
     //clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     //dropping cheese
     for(let i = 0; i < badFood.length; i++){
-    //    console.log('where da cheese?')
         badFood[i].render()
         //hit detection btwn cat & cheese
         if(cat.x + cat.width >= badFood[i].x && //right
@@ -123,6 +126,7 @@ function gameLoop() {
                 gameOverMessage.innerText = `Game Over! \n Stinky's running to the litter box! \n Your score was ${score}`
                 gameOverScreen.classList.add('show')
                 gameOver = true
+                gameOverSound.play()
                 console.log(gameOver)
             }else if (badFood[i].y < 570){
                 badFood[i].render()
@@ -160,8 +164,6 @@ function gameLoop() {
     if (cat.alive){
         cat.render()
     }
-    //smoother movement from falling food
-
 }
 
 /* EVENT LISTENERS */
@@ -170,8 +172,11 @@ function gameLoop() {
 // })
 //Start Button
 startButton.addEventListener('click', function(){
+    goodFood = []
+    badFood = []
     gameLoop()
     startScreen.classList.add('hide')
+    meow.play()
 })
 
 //player movement

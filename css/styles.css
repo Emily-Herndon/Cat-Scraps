@@ -64,6 +64,7 @@
         grid-area: btm-right;
     }
     .hidden{
+        font-family: 'Rubik Puddles', cursive;
         background-image: url(../images/cat-toilet.png);
         background-repeat: no-repeat;
         background-size: contain;
@@ -75,7 +76,6 @@
         right: 20%;
         left: 20%;
         display: none;
-        font-family: 'Rubik Puddles', cursive;
         font-size: 50px;
         font-weight: 900;
     }
@@ -88,8 +88,8 @@
     #restartButton{
         width: 100px;
     }
- 
     .start{
+        font-family: 'Gloria Hallelujah', cursive;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -103,7 +103,6 @@
         left: 20%;
         background-color: aquamarine;
         font-size: 50px;
-        font-family: 'Gloria Hallelujah', cursive;
     }
     .hide{
         display: none;
