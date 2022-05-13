@@ -23,7 +23,8 @@ let score = 0
 
 
 /* SOUND EFFECTS */
-const eatFood = new Audio('./audio/monch.mp3')
+const eatFood = new Audio('./audio/opal-food-monch.mp3')
+eatFood.volume = .3
 const meow = new Audio('./audio/meow.mp3')
 meow.volume = .5
 const gameOverSound = new Audio('./audio/fart-sound.wav')

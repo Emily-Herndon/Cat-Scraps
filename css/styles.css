@@ -86,7 +86,9 @@
         align-items: center;
     }
     #restartButton{
-        width: 100px;
+        width: 150px;
+        font-family: 'Gloria Hallelujah', cursive;
+        font-size: 25px;
     }
     .start{
         font-family: 'Gloria Hallelujah', cursive;
@@ -106,5 +108,12 @@
     }
     .hide{
         display: none;
+    }
+    #startButton{
+        font-family: 'Gloria Hallelujah', cursive;
+        font-size: 25px;
+    }
+    #gameOverMessage{
+        background-color: rgba(255, 255, 255, 0.55);
     }
     
