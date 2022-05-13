@@ -23,11 +23,11 @@ let score = 0
 
 
 /* SOUND EFFECTS */
-const eatFood = new Audio()
+const eatFood = new Audio('./audio/monch.mp3')
 const meow = new Audio('./audio/meow.mp3')
 meow.volume = .5
 const gameOverSound = new Audio('./audio/fart-sound.wav')
-
+gameOverSound.volume = .3
 
 /* SPRITES */
 const catSprite = new Image()
@@ -156,6 +156,7 @@ function gameLoop() {
                         // console.log(goodFood[i], "eeeeeeeeeee")
                         goodFood.splice(i, 1)
                         // cat.render()
+                        eatFood.play()
                         score++
                         scoreCount.innerText = `Score:${score}`
                     }else if (goodFood[i].y < 570){
