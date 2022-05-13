@@ -30,7 +30,7 @@
     #container {
     position: relative;
     max-width: 1000px;
-    height: 680px;
+    max-height: 680px;
     background-color: rgb(0, 234, 255);
     margin: 0 auto;
     padding: 1em;
@@ -116,4 +116,21 @@
     #gameOverMessage{
         background-color: rgba(255, 255, 255, 0.55);
     }
-    
+    @media screen and (max-width: 1500px) {
+        .start {
+          width: 70%;
+          height: 70%;
+          font-size: 25px;
+        }
+        #container {
+            width: 50%;
+            height: 25%;
+        }
+        canvas{
+            width: 70%;
+            height: 70%;
+        }
+        #startButton{
+            font-size: 10px;
+        }
+      }
