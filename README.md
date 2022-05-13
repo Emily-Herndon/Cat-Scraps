@@ -47,6 +47,5 @@ I intend to continue to work on this to make it the best it can be.
 - [Cat Paw background]("https://www.freepik.com/vectors/cat") created by pch.vector 
 
 # Sound Sources
-- [Cat meow]("https://mixkit.co/free-sound-effects/cat/") courtesy of mixkit
+- Cat meow & eating sound courtesy of my cat Opal
 - [Game Over]("https://mixkit.co/free-sound-effects/fart/") courtesy of mixkit
-- Eating Sound courtesy of my cat Opal

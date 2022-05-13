@@ -23,12 +23,12 @@ let score = 0
 
 
 /* SOUND EFFECTS */
-const eatFood = new Audio('./audio/opal-food-monch.mp3')
-eatFood.volume = .3
-const meow = new Audio('./audio/meow.mp3')
-meow.volume = .5
+const eatFood = new Audio('./audio/Monch.mp3')
+eatFood.volume = .5
+const meow = new Audio('./audio/Opal-meow.mp3')
+meow.volume = .7
 const gameOverSound = new Audio('./audio/fart-sound.wav')
-gameOverSound.volume = .3
+gameOverSound.volume = .1
 
 /* SPRITES */
 const catSprite = new Image()
