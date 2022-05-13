@@ -104,7 +104,7 @@ let foodFall = setInterval(function(){
         w = 40
         h = 55
     }else if (goodSprites[randoI === turkeySprite]){
-        w = 70
+        w = 75
         h = 50
     }
     goodFood.push(new Character(generateX(), 0, w, h, 'food', goodSprites[randoI]))
@@ -266,5 +266,5 @@ restartButton.addEventListener('click', function(){
     score = 0
     scoreCount.innerText = ""
     gameLoop()
-    console.log(gameOver)
+    meow.play()
 })
