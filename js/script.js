@@ -1,5 +1,6 @@
 console.log('Stinky play time!')
 
+
 /*DOM SELECTORS */
 const canvas = document.querySelector('#canvas')
 const scoreCount = document.querySelector('#score')
@@ -9,25 +10,24 @@ const gameOverScreen = document.querySelector('#gameOverScreen')
 const restartButton = document.querySelector('#restartButton')
 const startButton = document.querySelector('#startButton')
 const startScreen = document.querySelector('#startScreen')
-/*CANVAS SETUP/ GAME STATE */
+
+
+/*CANVAS SETUP/GAME STATE */
 let gameOver = false
 const ctx = canvas.getContext('2d')
 canvas.width = 1000
 const canvW = canvas.width
 canvas.height = 570
 const canvH = canvas.height
-console.log(canvW, canvH)
-function generateX (){
-    let randX = Math.floor(Math.random()*970)
-    return randX
-}
 let score = 0
 
+
+/* SOUND EFFECTS */
 const eatFood = new Audio()
 const meow = new Audio('./audio/meow.mp3')
 meow.volume = .5
 const gameOverSound = new Audio('./audio/fart-sound.wav')
-// const gameLoopInterval = setInterval(gameLoop, 60)
+
 
 /* SPRITES */
 const catSprite = new Image()
@@ -62,15 +62,22 @@ class Character {
     }
 }
 
+
 /* GAME OBJECTS */
 //player cat
 let cat = new Character(500, 505, 76, 60, 'player', catSprite)
-// cat.render()
+
+
 const goodSprites = [chickenSprite, fishSprite, turkeySprite]
 let goodFood = []
 let badFood = []
 
+
 /*GAME FUNCTIONS */
+function generateX (){
+    let randX = Math.floor(Math.random()*970)
+    return randX
+}
 
 let getRandomInt = () => {
     //generate a random number 0-3 to select a food image to render
@@ -159,17 +166,13 @@ function gameLoop() {
                         //prevents food from falling forever & arrays from expanding exponentially
                     }
                 }
-    
     //render the game objects
     if (cat.alive){
         cat.render()
     }
 }
-
 /* EVENT LISTENERS */
-// canvas.addEventListener('click', e => {
-//     console.log(`x is ${e.offsetX} y is ${e.offsetY}`)
-// })
+
 //Start Button
 startButton.addEventListener('click', function(){
     goodFood = []
@@ -231,6 +234,7 @@ document.addEventListener('keydown', function(e) {
         }
     }
 })
+
 //restart button
 restartButton.addEventListener('click', function(){
     cat = new Character(500, 505, 76, 60, 'player', catSprite)
