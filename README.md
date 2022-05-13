@@ -41,11 +41,17 @@ I intend to continue to work on this to make it the best it can be.
 - JavaScript
 
 ---
-# Image Sources
+# Sources & Credits
+- [Canvas Crawler]("https://github.com/WDI-SEA/canvas-crawler") for initial set up.
+- [W3Schools]("https://www.w3schools.com/") for research
+- [MDN]("https://developer.mozilla.org/en-US/") for research
+- [Chris Courses]("https://www.youtube.com/watch?v=4q2vvZn5aoo") for the Game Over & Start screens
+
+## Image Sources
 - Sprites courtesy of Vectornator's Iconator library
 - [Kitchen Background]("https://www.freepik.com/vectors/kitchen-cartoon") created by vectorpocket 
 - [Cat Paw background]("https://www.freepik.com/vectors/cat") created by pch.vector 
 
-# Sound Sources
+## Sound Sources
 - Cat meow & eating sound courtesy of my cat Opal
 - [Game Over]("https://mixkit.co/free-sound-effects/fart/") courtesy of mixkit
